@@ -20,6 +20,9 @@ function App() {
                     <Route path="/login">
                         <Login />
                     </Route>
+                    <Route exact path="/">
+                        <h2>Home</h2>
+                    </Route>
                 </Switch>
             </div>
         </Router>

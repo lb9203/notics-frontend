@@ -1,6 +1,7 @@
 import useLogin from "../api/auth/useLogin"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/use-auth";
+import { Redirect } from "react-router-dom";
 
 function Login() {
 	const [email, setEmail] = useState('');
@@ -21,6 +22,10 @@ function Login() {
 
 	if (isLoading) {
 		return <div>loading...</div>
+	}
+
+	if (auth.getSessionToken()){
+		return <Redirect to="/" />
 	}
 
 	return <form>

@@ -19,8 +19,8 @@ function useProvideAuth() {
         localStorage.setItem('noticsSessionToken', sessionToken);
     }
 
-    async function getSessionToken(){
-        localStorage.getItem('noticsSessionToken')
+    function getSessionToken(){
+        return localStorage.getItem('noticsSessionToken')
     }
 
     return {
