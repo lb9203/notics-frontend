@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { gql, useMutation } from "@apollo/client";
 
-const authContext = createContext({});
+const authContext = createContext(null);
 
 export function AuthProvider({ children }) {
     const auth = useProvideAuth();
@@ -15,18 +15,18 @@ export const useAuth = () => {
 function useProvideAuth() {
     const [accessToken, setAccessToken] = useState(null);
 
-    function setSessionToken(sessionToken){
+    async function setSessionToken(sessionToken){
         localStorage.setItem('noticsSessionToken', sessionToken);
     }
 
-    function getSessionToken(){
+    async function getSessionToken(){
         localStorage.getItem('noticsSessionToken')
     }
 
     return {
         accessToken: accessToken,
         setAccessToken: setAccessToken,
-        setSessionToken: setSessionToken(),
-        getSessionToken: getSessionToken()
+        setSessionToken: setSessionToken,
+        getSessionToken: getSessionToken
     }
 }
