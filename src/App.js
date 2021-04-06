@@ -12,15 +12,15 @@ function App() {
         <Router>
             <div>
                 <nav>
-                    <Link to="/login">
-                        Login
+                    <Link to="/home">
+                        Home
                     </Link>
                 </nav>
                 <Switch>
-                    <Route path="/login">
+                    <Route exact path="/">
                         <Login />
                     </Route>
-                    <Route exact path="/">
+                    <Route path="/home">
                         <h2>Home</h2>
                     </Route>
                 </Switch>

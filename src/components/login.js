@@ -1,21 +1,21 @@
 import useLogin from "../api/auth/useLogin"
-import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/use-auth";
+import { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 import { Redirect } from "react-router-dom";
 
 function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const { handleLogin, result, isLoading, error } = useLogin();
-	const auth = useAuth();
+	const { handleLogin, isLoading } = useLogin();
+	const [sessionToken, saveSessionToken] = useAuth().useSessionToken;
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		const sessionToken = await handleLogin(email, password);
 
-		if (sessionToken){
-			await auth.setSessionToken(sessionToken);
-		} else {
+		try{
+			const sessionToken = await handleLogin(email, password);
+			saveSessionToken(sessionToken);
+		} catch (error) {
 			console.log(error);
 		}
 	}
@@ -24,8 +24,8 @@ function Login() {
 		return <div>loading...</div>
 	}
 
-	if (auth.getSessionToken()){
-		return <Redirect to="/" />
+	if (sessionToken){
+		return <Redirect to="/home"/>
 	}
 
 	return <form>

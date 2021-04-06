@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloProvider} from '@apollo/client';
 import client from './api/client'
-import { AuthProvider } from "./hooks/use-auth";
+import { AuthProvider } from "./hooks/useAuth";
 
 
 ReactDOM.render(

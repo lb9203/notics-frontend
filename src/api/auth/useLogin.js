@@ -5,27 +5,24 @@ const LOGIN_MUTATION = gql`
     	login(email: $email, password: $password)
     }`;
 
-function UseLogin() {
-	const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION);
+function useLogin() {
+	const [login, { loading }] = useMutation(LOGIN_MUTATION);
 
 	const handleLogin = async (email, password) => {
-		try {
-			const {
-				data: {
-					login: sessionToken
-				}
-			} = await login({ variables: { email: email, password: password } });
+		const {
+			data: {
+				login: sessionToken
+			}
+		} = await login({ variables: { email: email, password: password } });
 
-			return sessionToken;
-		} catch (error) {}
+		return sessionToken;
+
 	}
 
 	return {
 		handleLogin: handleLogin,
-		result: data,
 		isLoading: loading,
-		error: error
 	}
 }
 
-export default UseLogin;
+export default useLogin;
