@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { gql, useMutation } from "@apollo/client";
 
 const authContext = createContext(null);
 
@@ -25,6 +24,11 @@ function useSessionToken() {
 		localStorage.setItem('noticsSessionToken', sessionToken);
 	}
 
+	function clearSessionToken() {
+		setSessionToken(null);
+		localStorage.removeItem('noticsSessionToken')
+	}
+
 	function loadSessionToken() {
 		return localStorage.getItem('noticsSessionToken')
 	}
@@ -33,5 +37,5 @@ function useSessionToken() {
 		setSessionToken(loadSessionToken());
 	}, []);
 
-	return [sessionToken, saveSessionToken]
+	return [sessionToken, saveSessionToken, clearSessionToken]
 }
