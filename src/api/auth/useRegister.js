@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 
 const REGISTER_MUTATION = gql`
-	mutation register($email: String!, $password: String!, $displayName) {
+	mutation register($email: String!, $password: String!, $displayName: String!) {
     	register(email: $email, password: $password, displayName: $displayName)
     }`;
 

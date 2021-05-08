@@ -1,5 +1,4 @@
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { useLogin } from "../../api/auth/useLogin";
 import { useAuth } from "../../hooks/useAuth";
@@ -36,13 +35,10 @@ function LoginForm() {
 	return <Form noValidate validated={validated}>
 		<Form.Group controlId="formBasicEmail">
 			<Form.Label>Email address</Form.Label>
-			<Form.Control required type="email" placeholder="Enter email" onChange={e => {
+			<Form.Control required type="email" placeholder="Email" onChange={e => {
 				setEmail(e.target.value);
 			}}/>
 			<Form.Control.Feedback type="invalid">Please provide a valid email address.</Form.Control.Feedback>
-			<Form.Text className="text-muted">
-				We'll never share your email with anyone else.
-			</Form.Text>
 		</Form.Group>
 
 		<Form.Group controlId="formBasicPassword">
