@@ -12,7 +12,7 @@ function AuthPage() {
 	}
 
 	let toggleFormButton = <Button variant="outline-secondary" onClick={() => toggleRegistering()}>
-		{isRegistering ? "Login instead" : "Register instead"}
+		{isRegistering ? "Login" : "Register"}
 	</Button>
 
 	return (
