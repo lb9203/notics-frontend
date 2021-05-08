@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 
-function SignInButton(){
+function SignInButton() {
 	return <Button href="/login">Sign in</Button>
 }
 
