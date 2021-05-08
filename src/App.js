@@ -1,6 +1,6 @@
 import './App.css';
 import {
-    BrowserRouter as Router,
+    BrowserRouter as Router, Redirect,
     Route,
     Switch,
 } from "react-router-dom";
@@ -15,6 +15,9 @@ function App() {
                 <NoticsNavbar/>
                 <Switch>
                     <Route exact path="/">
+                        <Redirect to="/home"/>
+                    </Route>
+                    <Route exact path="/login">
                         <LoginPage />
                     </Route>
                     <PrivateRoute path="/home">
@@ -24,7 +27,7 @@ function App() {
             </div>
         </Router>
     );
-};
+}
 
 
 export default App;

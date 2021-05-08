@@ -1,8 +1,7 @@
-import { useLogout } from "../api/auth/useSession";
 import Button from "react-bootstrap/Button";
 
 function SignInButton(){
-	return <Button href="/">Sign in</Button>
+	return <Button href="/login">Sign in</Button>
 }
 
 export default SignInButton;
