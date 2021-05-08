@@ -1,12 +1,12 @@
 import { useLogout } from "../api/auth/useLogout";
-import Button from "react-bootstrap/Button";
+import LoadingButton from "./LoadingButton";
 
 function SignOutButton() {
 	const [handleLogout, loading] = useLogout();
 
-	return <Button variant="outline-danger" onClick={() => {
-		handleLogout();
-	}}>{loading ? 'loading...' : 'Sign out'}</Button>
+	return <LoadingButton isLoading={loading} variant="outline-danger" onClick={() => handleLogout()}>
+		Sign Out
+	</LoadingButton>
 }
 
 export default SignOutButton;

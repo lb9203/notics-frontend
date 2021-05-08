@@ -4,14 +4,23 @@ import { useState } from "react";
 import { useLogin } from "../../api/auth/useLogin";
 import { useAuth } from "../../hooks/useAuth";
 import { Redirect } from "react-router-dom";
+import LoadingButton from "../LoadingButton";
 
 function LoginForm() {
+	const [validated, setValidated] = useState(false);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [handleLogin, isLoading] = useLogin();
+	const [handleLogin, loading] = useLogin();
 	const [sessionToken, saveSessionToken] = useAuth().useSessionToken;
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (event) => {
+		const form = event.currentTarget.form;
+
+		if (form.checkValidity() === false) {
+			setValidated(true);
+			return;
+		}
+
 		try {
 			const sessionToken = await handleLogin(email, password);
 			saveSessionToken(sessionToken);
@@ -20,20 +29,17 @@ function LoginForm() {
 		}
 	}
 
-	if (isLoading) {
-		return <div>loading...</div>
-	}
-
 	if (sessionToken) {
 		return <Redirect to="/home"/>
 	}
 
-	return <Form>
+	return <Form noValidate validated={validated}>
 		<Form.Group controlId="formBasicEmail">
 			<Form.Label>Email address</Form.Label>
-			<Form.Control type="email" placeholder="Enter email" onChange={e => {
+			<Form.Control required type="email" placeholder="Enter email" onChange={e => {
 				setEmail(e.target.value);
 			}}/>
+			<Form.Control.Feedback type="invalid">Please provide a valid email address.</Form.Control.Feedback>
 			<Form.Text className="text-muted">
 				We'll never share your email with anyone else.
 			</Form.Text>
@@ -41,13 +47,14 @@ function LoginForm() {
 
 		<Form.Group controlId="formBasicPassword">
 			<Form.Label>Password</Form.Label>
-			<Form.Control type="password" placeholder="Password" onChange={e => {
+			<Form.Control required type="password" placeholder="Password" onChange={e => {
 				setPassword(e.target.value);
 			}}/>
+			<Form.Control.Feedback type="invalid">Please provide a valid password.</Form.Control.Feedback>
 		</Form.Group>
-		<Button variant="primary" onClick={() => handleSubmit()}>
+		<LoadingButton isLoading={loading} variant="primary" onClick={e => handleSubmit(e)}>
 			Submit
-		</Button>
+		</LoadingButton>
 	</Form>;
 }
 
