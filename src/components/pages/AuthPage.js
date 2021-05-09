@@ -2,6 +2,7 @@ import { useState } from "react";
 import LoginForm from "../forms/LoginForm";
 import RegisterForm from "../forms/RegisterForm";
 import Button from "react-bootstrap/Button";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 function AuthPage() {
 
@@ -11,14 +12,20 @@ function AuthPage() {
 		setRegistering(!isRegistering);
 	}
 
-	let toggleFormButton = <Button variant="outline-secondary" onClick={() => toggleRegistering()}>
+	let toggleFormButton = <Button variant="link" onClick={() => toggleRegistering()}>
 		{isRegistering ? "Login" : "Register"}
 	</Button>
 
 	return (
 		<div id="auth-form" className="full-page-form">
-			{isRegistering ? <RegisterForm/> : <LoginForm/>}
-			{toggleFormButton}
+			<SwitchTransition>
+				<CSSTransition key={isRegistering} addEndListener={(node, done) => node.addEventListener("transitionend", done, false)} classNames='fade'>
+					<div>
+						{isRegistering ? <RegisterForm/> : <LoginForm/>}
+						{toggleFormButton}
+					</div>
+				</CSSTransition>
+			</SwitchTransition>
 		</div>
 	);
 }

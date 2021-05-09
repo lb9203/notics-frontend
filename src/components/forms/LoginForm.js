@@ -4,6 +4,7 @@ import { useLogin } from "../../api/auth/useLogin";
 import { useAuth } from "../../hooks/useAuth";
 import { Redirect } from "react-router-dom";
 import LoadingButton from "../LoadingButton";
+import { Alert } from "react-bootstrap";
 
 function LoginForm() {
 	const [validated, setValidated] = useState(false);
@@ -11,6 +12,14 @@ function LoginForm() {
 	const [password, setPassword] = useState('');
 	const [handleLogin, loading] = useLogin();
 	const [sessionToken, saveSessionToken] = useAuth().useSessionToken;
+
+
+	const [showError, setShowError] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
+
+	const errorAlert = <Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+		{errorMessage}
+	</Alert>
 
 	const handleSubmit = async (event) => {
 		const form = event.currentTarget.form;
@@ -24,7 +33,8 @@ function LoginForm() {
 			const sessionToken = await handleLogin(email, password);
 			saveSessionToken(sessionToken);
 		} catch (error) {
-			console.log(error);
+			setErrorMessage(error.message);
+			setShowError(true);
 		}
 	}
 
@@ -33,6 +43,7 @@ function LoginForm() {
 	}
 
 	return <Form noValidate validated={validated}>
+		{showError && errorAlert}
 		<Form.Group controlId="formBasicEmail">
 			<Form.Label>Email address</Form.Label>
 			<Form.Control required type="email" placeholder="Email" onChange={e => {
