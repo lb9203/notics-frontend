@@ -23,18 +23,16 @@ function ActivateForm() {
 		}
 	}
 
-	return <div id="activation-form">
-		<Form noValidate validated={validated}>
-			<Form.Group controlId="formBasicToken">
-				<Form.Label>Activation token</Form.Label>
-				<Form.Control required type="text" onChange={e => setActivationToken(e.target.value)}/>
-				<Form.Control.Feedback type="invalid">Please provide a valid activation token.</Form.Control.Feedback>
-			</Form.Group>
-			<LoadingButton isLoading={loading} variant="primary" onClick={e => handleSubmit(e)}>
-				Submit
-			</LoadingButton>
-		</Form>
-	</div>
+	return <Form noValidate validated={validated}>
+		<Form.Group controlId="formBasicToken">
+			<Form.Label>Activation token</Form.Label>
+			<Form.Control required type="text" onChange={e => setActivationToken(e.target.value)}/>
+			<Form.Control.Feedback type="invalid">Please provide a valid activation token.</Form.Control.Feedback>
+		</Form.Group>
+		<LoadingButton isLoading={loading} variant="primary" onClick={e => handleSubmit(e)}>
+			Submit
+		</LoadingButton>
+	</Form>;
 }
 
 export default ActivateForm;

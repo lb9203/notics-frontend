@@ -16,7 +16,7 @@ function AuthPage() {
 	</Button>
 
 	return (
-		<div id="auth-form">
+		<div id="auth-form" className="full-page-form">
 			{isRegistering ? <RegisterForm/> : <LoginForm/>}
 			{toggleFormButton}
 		</div>

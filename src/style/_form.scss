@@ -1,0 +1,16 @@
+.full-page-form {
+  display: block;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+  .form-group {
+    margin: 10px;
+  }
+
+  .btn {
+    margin: 10px;
+    width: 100px;
+  }
+}

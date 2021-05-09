@@ -7,6 +7,7 @@ import NoticsNavbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthPage from "./components/pages/AuthPage";
 import ActivationPage from "./components/pages/ActivationPage";
+import './style/style.scss';
 
 function App() {
 	return (
