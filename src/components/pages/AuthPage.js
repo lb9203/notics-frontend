@@ -19,7 +19,7 @@ function AuthPage() {
 	return (
 		<div id="auth-form" className="full-page-form">
 			<SwitchTransition>
-				<CSSTransition key={isRegistering} addEndListener={(node, done) => node.addEventListener("transitionend", done, false)} classNames='fade'>
+				<CSSTransition key={isRegistering} addEndListener={(node, done) => node.addEventListener("transitionend", done, false)} classNames='switch'>
 					<div>
 						{isRegistering ? <RegisterForm/> : <LoginForm/>}
 						{toggleFormButton}
