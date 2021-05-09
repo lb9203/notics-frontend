@@ -17,7 +17,7 @@ function ActivateForm() {
 		}
 
 		try {
-			const activatedEmail = handleActivate(activationToken);
+			const activatedEmail = await handleActivate(activationToken);
 		} catch (error) {
 			console.log(error);
 		}
