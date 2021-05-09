@@ -1,4 +1,3 @@
-import './App.css';
 import {
 	BrowserRouter as Router, Redirect,
 	Route,
@@ -6,7 +5,8 @@ import {
 } from "react-router-dom";
 import NoticsNavbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
-import AuthPage from "./components/AuthPage";
+import AuthPage from "./components/pages/AuthPage";
+import ActivationPage from "./components/pages/ActivationPage";
 
 function App() {
 	return (
@@ -17,8 +17,11 @@ function App() {
 					<Route exact path="/">
 						<Redirect to="/home"/>
 					</Route>
-					<Route exact path="/login">
+					<Route exact path="/auth">
 						<AuthPage/>
+					</Route>
+					<Route exact path="/activate">
+						<ActivationPage/>
 					</Route>
 					<PrivateRoute path="/home">
 						home
