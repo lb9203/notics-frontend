@@ -5,14 +5,13 @@ import PropTypes from 'prop-types';
 function LoadingButton({isLoading, children, ...rest }) {
 
 	return <Button disabled={isLoading} {...rest}>
-		{isLoading && <Spinner
+		{isLoading ? <Spinner
 			as="span"
 			animation="border"
 			size="sm"
 			role="status"
 			aria-hidden="true"
-		/>}
-		{children}
+		/> : children}
 	</Button>
 }
 
