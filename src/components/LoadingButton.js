@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 function LoadingButton({isLoading, children, ...rest }) {
 
-	return <Button {...rest}>
+	return <Button disabled={isLoading} {...rest}>
 		{isLoading && <Spinner
 			as="span"
 			animation="border"

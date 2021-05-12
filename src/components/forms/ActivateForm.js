@@ -2,37 +2,71 @@ import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import useActivate from "../../api/auth/useActivate";
 import LoadingButton from "../LoadingButton";
+import * as Yup from "yup";
+import { Formik } from "formik";
+import { Alert } from "react-bootstrap";
 
 function ActivateForm() {
-	const [activationToken, setActivationToken] = useState('');
 	const [handleActivate, loading] = useActivate();
-	const [validated, setValidated] = useState(false);
 
-	const handleSubmit = async (event) => {
-		const form = event.currentTarget.form;
+	const [showError, setShowError] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
 
-		if (form.checkValidity() === false) {
-			setValidated(true);
-			return;
-		}
+	const errorAlert = (
+		<Alert variant="danger" onClose={() => setShowError(false)} dismissible>
+			{errorMessage}
+		</Alert>
+	);
 
+	const handleSubmit = async (values) => {
 		try {
-			const activatedEmail = await handleActivate(activationToken);
+			const activatedEmail = await handleActivate(values.activationToken);
+			console.log(activatedEmail);
 		} catch (error) {
-			console.log(error);
+			setErrorMessage(error.message);
+			setShowError(true);
 		}
 	}
 
-	return <Form noValidate validated={validated}>
-		<Form.Group controlId="formBasicToken">
-			<Form.Label>Activation token</Form.Label>
-			<Form.Control required type="text" onChange={e => setActivationToken(e.target.value)}/>
-			<Form.Control.Feedback type="invalid">Please provide a valid activation token.</Form.Control.Feedback>
-		</Form.Group>
-		<LoadingButton isLoading={loading} variant="primary" onClick={e => handleSubmit(e)}>
-			Submit
-		</LoadingButton>
-	</Form>;
+	const validationSchema = Yup.object().shape({
+		'activationToken': Yup.string().uuid('Invalid token').required('Required')
+	})
+
+	return (
+		<Formik
+			validationSchema={validationSchema}
+			initialValues={{ 'activationToken': '' }}
+			onSubmit={handleSubmit}
+			validateOnChange={false}
+			validateOnBlur={false}
+		>
+			{({
+				  handleSubmit,
+				  handleChange,
+				  touched,
+				  errors
+			  }) => (
+				<Form noValidate>
+					{showError && errorAlert}
+					<Form.Group controlId="token">
+						<Form.Label>Activation token</Form.Label>
+						<Form.Control
+							type="text"
+							name="activationToken"
+							placeholder="Activation token"
+							onChange={handleChange}
+							isValid={touched.activationToken && !errors.activationToken}
+							isInvalid={!!errors.activationToken}
+						/>
+						<Form.Control.Feedback type="invalid">{errors.activationToken}</Form.Control.Feedback>
+					</Form.Group>
+					<LoadingButton isLoading={loading} variant="primary" onClick={handleSubmit}>
+						Submit
+					</LoadingButton>
+				</Form>
+			)}
+		</Formik>
+	);
 }
 
 export default ActivateForm;
