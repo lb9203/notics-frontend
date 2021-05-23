@@ -6,7 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import { ApolloProvider} from '@apollo/client';
 import client from './api/client'
 import { AuthProvider } from "./hooks/useAuth";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
     <ApolloProvider client={client}>

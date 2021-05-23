@@ -1,22 +1,14 @@
-import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import useActivate from "../../api/auth/useActivate";
+import * as yup from "yup";
+import { useFormik } from "formik";
+import { Box, Divider, Grid, TextField, Typography } from "@material-ui/core";
 import LoadingButton from "../LoadingButton";
-import * as Yup from "yup";
-import { Formik } from "formik";
-import { Alert } from "react-bootstrap";
+import { Alert } from "@material-ui/lab";
 
 function ActivateForm() {
 	const [handleActivate, loading] = useActivate();
-
-	const [showError, setShowError] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
-
-	const errorAlert = (
-		<Alert variant="danger" onClose={() => setShowError(false)} dismissible>
-			{errorMessage}
-		</Alert>
-	);
 
 	const handleSubmit = async (values) => {
 		try {
@@ -24,48 +16,52 @@ function ActivateForm() {
 			console.log(activatedEmail);
 		} catch (error) {
 			setErrorMessage(error.message);
-			setShowError(true);
 		}
 	}
 
-	const validationSchema = Yup.object().shape({
-		'activationToken': Yup.string().uuid('Invalid token').required('Required')
+	const validationSchema = yup.object({
+		'activationToken': yup.string().uuid('Invalid token').required('Required')
+	});
+
+	const formik = useFormik({
+		initialValues: {
+			activationToken: ''
+		},
+		validationSchema: validationSchema,
+		onSubmit: values => handleSubmit(values)
 	})
 
+	const errorAlert = (
+		<Alert severity="error" onClose={() => setErrorMessage('')}>{errorMessage}</Alert>
+	);
+
 	return (
-		<Formik
-			validationSchema={validationSchema}
-			initialValues={{ 'activationToken': '' }}
-			onSubmit={handleSubmit}
-			validateOnChange={false}
-			validateOnBlur={false}
-		>
-			{({
-				  handleSubmit,
-				  handleChange,
-				  touched,
-				  errors
-			  }) => (
-				<Form noValidate>
-					{showError && errorAlert}
-					<Form.Group controlId="token">
-						<Form.Label>Activation token</Form.Label>
-						<Form.Control
-							type="text"
+		<Box>
+			<Typography variant="h4" color="textSecondary" align="center">Activate</Typography>
+			<Divider variant="middle"/>
+			{!!errorMessage && errorAlert}
+			<form autoComplete="off">
+				<Grid container alignItems="flex-start" spacing={2}>
+					<Grid item xs={12}>
+						<TextField
+							autoComplete="one-time-code"
 							name="activationToken"
-							placeholder="Activation token"
-							onChange={handleChange}
-							isValid={touched.activationToken && !errors.activationToken}
-							isInvalid={!!errors.activationToken}
+							id="activationToken"
+							label="Activation Token"
+							value={formik.values.activationToken}
+							onChange={formik.handleChange}
+							error={formik.touched.activationToken && !!formik.errors.activationToken}
+							helperText={formik.touched.activationToken && formik.errors.activationToken}
+							variant="outlined"
+							fullWidth
 						/>
-						<Form.Control.Feedback type="invalid">{errors.activationToken}</Form.Control.Feedback>
-					</Form.Group>
-					<LoadingButton isLoading={loading} variant="primary" onClick={handleSubmit}>
-						Submit
-					</LoadingButton>
-				</Form>
-			)}
-		</Formik>
+					</Grid>
+					<Grid item xs={12}>
+						<LoadingButton isLoading={loading} onClick={e => formik.handleSubmit(e)} color="primary" variant="contained">Activate</LoadingButton>
+					</Grid>
+				</Grid>
+			</form>
+		</Box>
 	);
 }
 

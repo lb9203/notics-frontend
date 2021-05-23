@@ -3,17 +3,15 @@ import {
 	Route,
 	Switch,
 } from "react-router-dom";
-import NoticsNavbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthPage from "./components/pages/AuthPage";
-import ActivationPage from "./components/pages/ActivationPage";
+import ActivatePage from "./components/pages/ActivatePage";
 import './style/style.scss';
 
 function App() {
 	return (
 		<Router>
 			<div>
-				<NoticsNavbar/>
 				<Switch>
 					<Route exact path="/">
 						<Redirect to="/home"/>
@@ -22,7 +20,7 @@ function App() {
 						<AuthPage/>
 					</Route>
 					<Route exact path="/activate">
-						<ActivationPage/>
+						<ActivatePage/>
 					</Route>
 					<PrivateRoute path="/home">
 						home

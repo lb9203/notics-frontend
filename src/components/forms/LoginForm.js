@@ -1,26 +1,16 @@
-import Form from "react-bootstrap/Form";
-import { useState } from "react";
-import { useLogin } from "../../api/auth/useLogin";
-import { useAuth } from "../../hooks/useAuth";
-import { Redirect } from "react-router-dom";
+import { Box, Divider, Grid, TextField, Typography } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import LoadingButton from "../LoadingButton";
-import { Alert } from "react-bootstrap";
-import * as Yup from "yup";
-import { Formik } from 'formik';
-
+import { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from 'yup';
+import useLogin from "../../api/auth/useLogin";
+import { useAuth } from "../../hooks/useAuth";
 
 function LoginForm() {
 	const [handleLogin, loading] = useLogin();
+	const [errorMessage, setErrorMessage] = useState('');
 	const [sessionToken, saveSessionToken] = useAuth().useSessionToken;
-
-	const [showError, setShowError] = useState(false);
-	const [errorMessage, setErrorMessage] = useState("");
-
-	const errorAlert = (
-		<Alert variant="danger" onClose={() => setShowError(false)} dismissible>
-			{errorMessage}
-		</Alert>
-	);
 
 	const handleSubmit = async (values) => {
 		try {
@@ -28,71 +18,70 @@ function LoginForm() {
 			saveSessionToken(sessionToken);
 		} catch (error) {
 			setErrorMessage(error.message);
-			setShowError(true);
 		}
 	}
 
-	if (sessionToken) {
-		return <Redirect to="/home"/>
-	}
-
-	const validationSchema = Yup.object().shape({
-		email: Yup.string().email('Invalid email').required('Required'),
-		password: Yup.string().required('Required'),
+	const validationSchema = yup.object({
+		email: yup.string().email("Invalid Email").required("Required"),
+		password: yup.string().required("Required")
 	});
 
+	const formik = useFormik({
+		initialValues: {
+			email: '',
+			password: ''
+		},
+		validationSchema: validationSchema,
+		onSubmit: values => handleSubmit(values)
+	})
+
+	const errorAlert = (
+		<Alert severity="error" onClose={() => setErrorMessage('')}>{errorMessage}</Alert>
+	);
+
 	return (
-		<Formik
-			validationSchema={validationSchema}
-			initialValues={{ 'email': '', 'password': '' }}
-			onSubmit={handleSubmit}
-			validateOnBlur={false}
-			validateOnChange={false}
-		>
-			{({
-				  handleSubmit,
-				  handleChange,
-				  touched,
-				  errors
-			  }) => (
-				<Form noValidate>
-					{showError && errorAlert}
-					<Form.Group>
-						<Form.Label>Email address</Form.Label>
-						<Form.Control
-							type="email"
-							placeholder="Email"
+		<Box>
+			<Typography variant="h4" color="textSecondary" align="center">Login</Typography>
+			<Divider variant="middle"/>
+			{!!errorMessage && errorAlert}
+			<form autoComplete="off">
+				<Grid container alignItems="flex-start" spacing={2}>
+					<Grid item xs={12}>
+						<TextField
+							autoComplete="email"
 							name="email"
-							onChange={handleChange}
-							isValid={touched.email && !errors.email}
-							isInvalid={!!errors.email}
+							id="email"
+							label="Email"
+							type="email"
+							value={formik.values.email}
+							onChange={formik.handleChange}
+							error={formik.touched.email && !!formik.errors.email}
+							helperText={formik.touched.email && formik.errors.email}
+							variant="outlined"
+							fullWidth
 						/>
-						<Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
-					</Form.Group>
-
-					<Form.Group controlId="formBasicPassword">
-						<Form.Label>Password</Form.Label>
-						<Form.Control
-							type="password"
-							placeholder="Password"
+					</Grid>
+					<Grid item xs={12}>
+						<TextField
+							autoComplete="current-password"
 							name="password"
-							onChange={handleChange}
-							isValid={touched.password && !errors.password}
-							isInvalid={!!errors.password}
+							id="password"
+							label="Password"
+							type="password"
+							value={formik.values.password}
+							onChange={formik.handleChange}
+							error={formik.touched.password && !!formik.errors.password}
+							helperText={formik.touched.password && formik.errors.password}
+							variant="outlined"
+							fullWidth
 						/>
-						<Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
-					</Form.Group>
-					<LoadingButton
-						isLoading={loading}
-						variant="primary"
-						onClick={handleSubmit}
-
-					>
-						Submit
-					</LoadingButton>
-				</Form>
-			)}
-		</Formik>
+					</Grid>
+					<Grid item xs={12}>
+						<LoadingButton isLoading={loading} onClick={e => formik.handleSubmit(e)} color="primary" variant="contained">Login</LoadingButton>
+					</Grid>
+				</Grid>
+			</form>
+		</Box>
 	);
 }
 
