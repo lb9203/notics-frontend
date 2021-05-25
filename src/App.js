@@ -7,27 +7,33 @@ import PrivateRoute from "./components/PrivateRoute";
 import AuthPage from "./components/pages/AuthPage";
 import ActivatePage from "./components/pages/ActivatePage";
 import './style/style.scss';
+import useClient from "./api/useClient";
+import { ApolloProvider } from "@apollo/client";
+import { AuthProvider } from "./hooks/useAuth";
+import HomePage from "./components/pages/HomePage";
 
 function App() {
 	return (
-		<Router>
-			<div>
-				<Switch>
-					<Route exact path="/">
-						<Redirect to="/home"/>
-					</Route>
-					<Route exact path="/auth">
-						<AuthPage/>
-					</Route>
-					<Route exact path="/activate">
-						<ActivatePage/>
-					</Route>
-					<PrivateRoute path="/home">
-						home
-					</PrivateRoute>
-				</Switch>
-			</div>
-		</Router>
+		<ApolloProvider client={useClient()}>
+			<Router>
+				<div>
+					<Switch>
+						<Route exact path="/">
+							<Redirect to="/home"/>
+						</Route>
+						<Route exact path="/auth">
+							<AuthPage/>
+						</Route>
+						<Route exact path="/activate">
+							<ActivatePage/>
+						</Route>
+						<PrivateRoute path="/home">
+							<HomePage/>
+						</PrivateRoute>
+					</Switch>
+				</div>
+			</Router>
+		</ApolloProvider>
 	);
 }
 

@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 
 const IS_SESSION_OPEN_QUERY = gql`
-	mutation isSessionOpen($sessionToken: String!) {
+	query isSessionOpen($sessionToken: String!) {
     	isSessionOpen(sessionToken: $sessionToken)
     }`;
 
