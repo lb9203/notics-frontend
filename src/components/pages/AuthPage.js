@@ -4,7 +4,7 @@ import RegisterForm from "../forms/RegisterForm";
 import Button from "@material-ui/core/Button";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import ResponsiveFormContainer from "../forms/PaperForm/ResponsiveFormContainer";
+import ResponsiveFormContainer from "../forms/ResponsiveFormContainer/ResponsiveFormContainer";
 
 function AuthPage() {
 	const [isRegistering, setRegistering] = useState(false);
