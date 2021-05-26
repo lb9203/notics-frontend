@@ -1,5 +1,6 @@
-import { Box, useMediaQuery, Paper } from "@material-ui/core";
+import { Box, Paper } from "@material-ui/core";
 import './ResponsiveFormContainer.scss';
+import useDeviceType from "../../../hooks/useDeviceType";
 
 /**
  * Container for forms styled as paper on non-mobile devices.
@@ -10,7 +11,7 @@ import './ResponsiveFormContainer.scss';
  * @constructor
  */
 function ResponsiveFormContainer({ children, ...rest }) {
-	const isMobile = useMediaQuery('(max-width:480px)')
+	const [isMobile, isTablet] = useDeviceType();
 
 	if (isMobile) {
 		return (
