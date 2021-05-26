@@ -1,4 +1,4 @@
-import { ApolloClient, from, HttpLink, InMemoryCache, ApolloLink, fromPromise } from '@apollo/client';
+import { ApolloClient, from, HttpLink, InMemoryCache, ApolloLink } from '@apollo/client';
 import { useAuth } from "../hooks/useAuth";
 import { onError } from "@apollo/client/link/error";
 import refreshAccessToken from "./auth/refreshAccessToken";
@@ -18,6 +18,7 @@ function useClient() {
 
 	const authMiddleware = new ApolloLink((operation, forward) => {
 		//Set Authorization header if accessToken is not null.
+		console.log("Setting authorization header.");
 		operation.setContext(({ headers = {} }) => ({
 			headers: {
 				...headers,
@@ -28,20 +29,30 @@ function useClient() {
 		return forward(operation);
 	})
 
-	const errorLink = onError(
-		({
-			 graphQLErrors,
-			 networkError,
-			 operation,
-			 forward
-		 }) => {
+	const errorLink = onError(({ graphQLErrors, networkError, operation, forward, }) => {
 			if (graphQLErrors) {
 				if (graphQLErrors) {
-					graphQLErrors.forEach(({extensions: {code}}) => {
+					graphQLErrors.forEach(({ extensions: { code } }) => {
 						switch (code) {
-							case "UNAUTHENTICATED":
-								//TODO: Implement refresh of access token.
-								console.log(code);
+							case "UNAUTHENTICATED": {
+								refreshAccessToken({ client: fallbackClient, sessionToken: sessionToken })
+									.then((value => {
+										setAccessToken(value);
+										console.log("Access token refreshed.");
+										operation.setContext(({ headers = {} }) => ({
+											headers: {
+												...headers,
+												Authorization: accessToken
+											}
+										}));
+
+										forward(operation);
+									}));
+								break;
+							}
+							case "INVALID_SESSION_TOKEN":
+								setAccessToken(null);
+								clearSessionToken();
 								break;
 						}
 					});
