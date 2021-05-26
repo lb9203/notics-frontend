@@ -2,15 +2,18 @@ import { ApolloClient, from, HttpLink, InMemoryCache, ApolloLink } from '@apollo
 import { useAuth } from "../hooks/useAuth";
 import { onError } from "@apollo/client/link/error";
 import refreshAccessToken from "./auth/refreshAccessToken";
-import useFallbackClient from "./useFallbackClient";
 
-export const SERVER_URI = 'http://localhost:3333/graphql'
+const SERVER_URI = 'http://localhost:3333/graphql'
 
 function useClient() {
 
-	const fallbackClient = useFallbackClient();
-	const [sessionToken] = useAuth().useSessionToken;
+	const [sessionToken, saveSessionToken, clearSessionToken] = useAuth().useSessionToken;
 	const [accessToken, setAccessToken] = useAuth().useAccessToken;
+
+	const fallbackClient =  new ApolloClient({
+		cache: new InMemoryCache(),
+		uri: SERVER_URI
+	});
 
 	const httpLink = new HttpLink({ uri: SERVER_URI });
 
@@ -32,14 +35,23 @@ function useClient() {
 				graphQLErrors.forEach(({ extensions: { code } }) => {
 					switch (code) {
 						case "UNAUTHENTICATED": {
+							//Delete current access token.
+							setAccessToken(null);
+
+							//Attempt to get new access token.
 							refreshAccessToken({ client: fallbackClient, sessionToken: sessionToken })
 								.then((value => {
 									setAccessToken(value);
-									console.log("Access token refreshed.");
+									console.log("Access token refreshed, retrying.");
 
+									// Retry last operation.
 									forward(operation);
-								}));
-							break;
+								}))
+								.catch(error => {
+									console.log("Access token fetch failed, redirecting to login.");
+									clearSessionToken();
+									window.location.reload();
+								});
 						}
 					}
 				});
