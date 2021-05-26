@@ -2,9 +2,9 @@ import { useState } from "react";
 import LoginForm from "../forms/LoginForm";
 import RegisterForm from "../forms/RegisterForm";
 import Button from "@material-ui/core/Button";
-import { Box, Paper } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import ResponsiveFormContainer from "../forms/PaperForm/ResponsiveFormContainer";
 
 function AuthPage() {
 	const [isRegistering, setRegistering] = useState(false);
@@ -23,12 +23,10 @@ function AuthPage() {
 	}
 
 	return (
-		<Box margin="10px" justifySelf="center">
-			<Paper className="full-page-form">
-				{isRegistering ? <RegisterForm/> : <LoginForm/>}
-				{toggleFormButton}
-			</Paper>
-		</Box>
+		<ResponsiveFormContainer>
+			{isRegistering ? <RegisterForm/> : <LoginForm/>}
+			{toggleFormButton}
+		</ResponsiveFormContainer>
 	);
 }
 
