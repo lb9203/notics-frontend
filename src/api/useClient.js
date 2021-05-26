@@ -31,31 +31,29 @@ function useClient() {
 
 	const errorLink = onError(({ graphQLErrors, networkError, operation, forward, }) => {
 		if (graphQLErrors) {
-			if (graphQLErrors) {
-				graphQLErrors.forEach(({ extensions: { code } }) => {
-					switch (code) {
-						case "UNAUTHENTICATED": {
-							//Delete current access token.
-							setAccessToken(null);
+			graphQLErrors.forEach(({ extensions: { code } }) => {
+				switch (code) {
+					case "UNAUTHENTICATED": {
+						//Delete current access token.
+						setAccessToken(null);
 
-							//Attempt to get new access token.
-							refreshAccessToken({ client: fallbackClient, sessionToken: sessionToken })
-								.then((value => {
-									setAccessToken(value);
-									console.log("Access token refreshed, retrying.");
+						//Attempt to get new access token.
+						refreshAccessToken({ client: fallbackClient, sessionToken: sessionToken })
+							.then((value => {
+								setAccessToken(value);
+								console.log("Access token refreshed, retrying.");
 
-									// Retry last operation.
-									forward(operation);
-								}))
-								.catch(error => {
-									console.log("Access token fetch failed, redirecting to login.");
-									clearSessionToken();
-									window.location.reload();
-								});
-						}
+								// Retry last operation.
+								forward(operation);
+							}))
+							.catch(error => {
+								console.log("Access token fetch failed, redirecting to login.");
+								clearSessionToken();
+								window.location.reload();
+							});
 					}
-				});
-			}
+				}
+			});
 		}
 	});
 
