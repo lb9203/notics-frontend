@@ -1,6 +1,6 @@
 import { Box, Divider, Grid, TextField, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import LoadingButton from "../LoadingButton";
+import LoadingButton from "../inputs/LoadingButton/LoadingButton";
 import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from 'yup';

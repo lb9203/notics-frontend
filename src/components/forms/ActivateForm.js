@@ -3,7 +3,7 @@ import useActivate from "../../api/auth/useActivate";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { Box, Divider, Grid, TextField, Typography } from "@material-ui/core";
-import LoadingButton from "../LoadingButton";
+import LoadingButton from "../inputs/LoadingButton/LoadingButton";
 import { Alert } from "@material-ui/lab";
 
 function ActivateForm() {

@@ -9,8 +9,6 @@ import ActivatePage from "./components/pages/ActivatePage";
 import './style/style.scss';
 import useClient from "./api/useClient";
 import { ApolloProvider } from "@apollo/client";
-import { AuthProvider } from "./hooks/useAuth";
-import HomePage from "./components/pages/HomePage";
 
 function App() {
 	return (
@@ -28,7 +26,7 @@ function App() {
 							<ActivatePage/>
 						</Route>
 						<PrivateRoute path="/home">
-							<HomePage/>
+							home
 						</PrivateRoute>
 					</Switch>
 				</div>
