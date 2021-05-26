@@ -1,27 +1,26 @@
 import Button from "@material-ui/core/Button";
 import { useAuth } from "../../hooks/useAuth";
-import { gql } from "@apollo/client";
-import useGetAccessToken from "../../api/auth/useGetAccessToken";
-
-
-const ACCESS_TOKEN_QUERY = gql`
-	query accessToken($sessionToken: String!) {
-    	accessToken(sessionToken: $sessionToken)
-    }
-`;
+import { useApolloClient } from "@apollo/client";
+import useGetCollection from "../../api/collection/useGetCollection";
 
 function HomePage() {
 	const [sessionToken, saveSessionToken, clearSessionToken] = useAuth().useSessionToken;
-	const [get, loading] = useGetAccessToken();
+	const [handleGetCollections, collectionsLoading, collections, collectionsErrors ] = useGetCollection()
+	const client = useApolloClient();
 
-	const handleToken = async () => {
-		const a = get(sessionToken);
-		console.log(a);
+	const handleClick = async () => {
+		await handleGetCollections();
+	}
+
+	const showData = () => {
+		console.log(collections);
+		return 'data';
 	}
 
 	return (
 		<div>
-			<Button onClick={() => handleToken()}>token</Button>
+			<div>{collectionsLoading ? 'loading...' : 'data'}</div>
+			<Button onClick={() => handleClick()}>collections</Button>
 		</div>
 	);
 }
