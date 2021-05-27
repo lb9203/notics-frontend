@@ -11,17 +11,20 @@ export function useLogout() {
 	const [sessionToken, , clearSessionToken] = useAuth().useSessionToken;
 
 	const handleLogout = async () => {
-		const {
-			data: {
-				logout: success
-			}
-		} = await logout({ variables: { sessionToken: sessionToken } });
+		try {
+			const {
+				data: {
+					logout: success
+				}
+			} = await logout({variables: {sessionToken: sessionToken}});
 
-		if (success === true) {
+			return success;
+		} catch (e) {
+			console.log("Error closing session: "+e.message);
+			return false;
+		} finally {
 			clearSessionToken();
 		}
-
-		return success;
 	}
 
 	return [handleLogout, loading];
