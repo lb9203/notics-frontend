@@ -13,7 +13,7 @@ import useDeviceType from "../../../hooks/useDeviceType";
 function ResponsiveFormContainer({ children, ...rest }) {
 	const [isMobile, isTablet] = useDeviceType();
 
-	if (isMobile) {
+	if (isTablet) {
 		return (
 			//Outer box provides margin that inner box can't, because it needs auto margin.
 			<Box margin="10px" justifySelf="center">

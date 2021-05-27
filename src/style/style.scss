@@ -1,0 +1,13 @@
+.content {
+  flex-grow: 1;
+}
+
+.main {
+  display: flex;
+}
+
+body {
+  @media (min-width: 768px) {
+    background-color: #fafafa;
+  }
+}

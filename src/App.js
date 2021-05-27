@@ -9,28 +9,41 @@ import ActivatePage from "./components/pages/ActivatePage";
 import './style/style.scss';
 import useClient from "./api/useClient";
 import { ApolloProvider } from "@apollo/client";
+import NoticsDrawer from "./components/Drawer/NoticsDrawer/NoticsDrawer";
+import { useState } from "react";
 
 function App() {
+	const [drawerOpen, setDrawerOpen] = useState(false);
+
 	return (
 		<ApolloProvider client={useClient()}>
 			<Router>
-				<div>
-					<Switch>
-						<Route exact path="/">
-							<Redirect to="/home"/>
-						</Route>
-						<Route exact path="/auth">
-							<AuthPage/>
-						</Route>
-						<Route exact path="/activate">
-							<ActivatePage/>
-						</Route>
-						<PrivateRoute path="/home">
-							home
-						</PrivateRoute>
-					</Switch>
+				<div className="main">
+					<nav>
+						<NoticsDrawer open={drawerOpen} onOpen={() => setDrawerOpen(true)} onClose={() => setDrawerOpen(false)}/>
+					</nav>
+					<div className="content">
+						<Switch>
+							<Route exact path="/">
+								<Redirect to="/home"/>
+							</Route>
+							<Route exact path="/auth">
+								<AuthPage/>
+							</Route>
+							<Route exact path="/activate">
+								<ActivatePage/>
+							</Route>
+							<PrivateRoute path="/home">
+								<div  className="content">
+									home
+								</div>
+							</PrivateRoute>
+						</Switch>
+					</div>
+
 				</div>
 			</Router>
+
 		</ApolloProvider>
 	);
 }
