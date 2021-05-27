@@ -1,11 +1,12 @@
-import { Box, Divider, Grid, TextField, Typography } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import {Box, Divider, Grid, TextField} from "@material-ui/core";
+import {Alert} from "@material-ui/lab";
 import LoadingButton from "../inputs/LoadingButton/LoadingButton";
-import { useState } from "react";
-import { useFormik } from "formik";
+import {useState} from "react";
+import {useFormik} from "formik";
 import * as yup from 'yup';
 import useLogin from "../../api/auth/useLogin";
-import { useAuth } from "../../hooks/useAuth";
+import {useAuth} from "../../hooks/useAuth";
+import {PersonRounded} from "@material-ui/icons";
 
 function LoginForm() {
 	const [handleLogin, loading] = useLogin();
@@ -41,7 +42,7 @@ function LoginForm() {
 
 	return (
 		<Box>
-			<Typography variant="h4" color="textSecondary" align="center">Login</Typography>
+			<PersonRounded style={{fontSize: 60}} color="primary"/>
 			<Divider variant="middle"/>
 			{!!errorMessage && errorAlert}
 			<form autoComplete="off">

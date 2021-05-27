@@ -1,10 +1,11 @@
-import { Box, Divider, Grid, TextField, Typography } from "@material-ui/core";
+import {Box, Divider, Grid, TextField} from "@material-ui/core";
 import LoadingButton from "../inputs/LoadingButton/LoadingButton";
-import { useFormik } from "formik";
+import {useFormik} from "formik";
 import useRegister from "../../api/auth/useRegister";
-import { Alert } from "@material-ui/lab";
+import {Alert} from "@material-ui/lab";
 import * as yup from 'yup'
-import { useState } from "react";
+import {useState} from "react";
+import {PersonAddRounded} from "@material-ui/icons";
 
 function RegisterForm() {
 	const [handleRegister, loading] = useRegister();
@@ -43,7 +44,7 @@ function RegisterForm() {
 
 	return (
 		<Box>
-			<Typography variant="h4" color="textSecondary" align="center">Register</Typography>
+			<PersonAddRounded style={{fontSize: 60}} color="primary"/>
 			<Divider variant="middle"/>
 			{!!errorMessage && errorAlert}
 			<form>
@@ -108,7 +109,8 @@ function RegisterForm() {
 						/>
 					</Grid>
 					<Grid item xs={12}>
-						<LoadingButton isLoading={loading} onClick={e => formik.handleSubmit(e)} color="primary" variant="contained">Register</LoadingButton>
+						<LoadingButton isLoading={loading} onClick={e => formik.handleSubmit(e)} color="primary"
+									   variant="contained">Register</LoadingButton>
 					</Grid>
 				</Grid>
 			</form>
