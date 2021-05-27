@@ -1,6 +1,19 @@
 .notics-drawer {
   width: 240px;
   flex-shrink: 0;
+
+  .control-container {
+    display: flex;
+    padding: 5px;
+
+    #home-button {
+      margin-right: auto
+    }
+
+    #logout-button {
+      margin-left: auto;
+    }
+  }
 }
 
 .notics-drawer-paper {

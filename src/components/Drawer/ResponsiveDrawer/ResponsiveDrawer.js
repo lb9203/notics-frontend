@@ -4,7 +4,7 @@ import useDeviceType from "../../../hooks/useDeviceType";
 function ResponsiveDrawer({children, ...rest}) {
 	const [isMobile, isTablet] = useDeviceType();
 
-	if (isTablet) {
+	if (isMobile || isTablet) {
 		return (
 			<SwipeableDrawer className="responsive-drawer" {...rest}>
 				{children}
