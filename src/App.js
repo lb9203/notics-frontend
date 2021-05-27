@@ -9,7 +9,7 @@ import ActivatePage from "./components/pages/ActivatePage";
 import './style/style.scss';
 import useClient from "./api/useClient";
 import { ApolloProvider } from "@apollo/client";
-import NoticsDrawer from "./components/Drawer/NoticsDrawer/NoticsDrawer";
+import NoticsDrawer from "./components/drawer/NoticsDrawer/NoticsDrawer";
 import { useState } from "react";
 import {useAuth} from "./hooks/useAuth";
 
@@ -25,8 +25,7 @@ function App() {
 					<nav>
 						<NoticsDrawer open={drawerOpen} onOpen={() => setDrawerOpen(true)}
 									  onClose={() => setDrawerOpen(false)}/>
-					</nav>
-					}
+					</nav>}
 					<div className="content">
 						<Switch>
 							<Route exact path="/">

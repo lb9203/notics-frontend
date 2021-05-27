@@ -5,10 +5,7 @@ const COLLECTION_QUERY = gql`
     	collection(collectionId: $collectionId) {
     		collectionId
     		name
-    		description
-    		children {
-    			name
-    		}
+    		parentCollectionId
     	}
     }
 `;
