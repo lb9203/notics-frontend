@@ -11,17 +11,22 @@ import useClient from "./api/useClient";
 import { ApolloProvider } from "@apollo/client";
 import NoticsDrawer from "./components/Drawer/NoticsDrawer/NoticsDrawer";
 import { useState } from "react";
+import {useAuth} from "./hooks/useAuth";
 
 function App() {
 	const [drawerOpen, setDrawerOpen] = useState(false);
+	const [sessionToken] = useAuth().useSessionToken;
 
 	return (
 		<ApolloProvider client={useClient()}>
 			<Router>
 				<div className="main">
+					{sessionToken &&
 					<nav>
-						<NoticsDrawer open={drawerOpen} onOpen={() => setDrawerOpen(true)} onClose={() => setDrawerOpen(false)}/>
+						<NoticsDrawer open={drawerOpen} onOpen={() => setDrawerOpen(true)}
+									  onClose={() => setDrawerOpen(false)}/>
 					</nav>
+					}
 					<div className="content">
 						<Switch>
 							<Route exact path="/">
