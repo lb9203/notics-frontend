@@ -9,19 +9,16 @@ import useLogout from "../../../api/auth/useLogout";
 import useGetCollection from "../../../api/collection/useGetCollection";
 import { cloneDeep } from "@apollo/client/utilities";
 import CollectionList from "../list/CollectionList";
+import { useEffect, useState } from "react";
 
-const listToTree = (roots, collections) => {
-	if (roots.length === 0) {
-		return [];
-	}
+const listToTree = (parentId, collections) => {
+	const roots = collections.filter((collection) => {
+		return collection.parentCollectionId === parentId;
+	});
 
 	roots.forEach((root) => {
-		let children = collections.filter((collection) => {
-			return collection.parentCollectionId === root.collectionId;
-		});
-
-		root.children = listToTree(children, collections);
-	})
+		root.children = listToTree(root.collectionId, collections);
+	});
 
 	return roots;
 }
@@ -31,20 +28,15 @@ function NoticsDrawer({ ...rest }) {
 	const history = useHistory();
 
 	const { loading, data, errors } = useGetCollection({ collectionId: null, parentCollectionId: null });
+	const [formattedData, setFormattedData] = useState([]);
 	const [handleLogout, logoutLoading] = useLogout(false);
 
-
-	const formatData = () => {
+	useEffect(() => {
 		if (data) {
-			let {collection: collections} = cloneDeep(data);
-
-			let roots = collections.filter((collection) => {return collection.parentCollectionId === null});
-
-			return listToTree(roots, collections);
+			const {collection: collections} = cloneDeep(data);
+			setFormattedData(listToTree(null, collections));
 		}
-
-		return [];
-	}
+	}, [data])
 
 	return (
 		<ResponsiveDrawer {...rest} className="notics-drawer" classes={{ paper: 'notics-drawer-paper' }}>
@@ -53,7 +45,7 @@ function NoticsDrawer({ ...rest }) {
 				<LoadingIconButton isLoading={logoutLoading} onClick={() => handleLogout()} id="logout-button"><MeetingRoomRounded/></LoadingIconButton>
 			</Box>
 			<Divider variant="middle"/>
-			<CollectionList  collectionData={formatData()}/>
+			<CollectionList  collectionData={formattedData}/>
 		</ResponsiveDrawer>
 	);
 }
