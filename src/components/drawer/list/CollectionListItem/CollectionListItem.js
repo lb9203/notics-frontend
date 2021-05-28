@@ -1,7 +1,35 @@
 import PropTypes from "prop-types";
+import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { useState } from "react";
+import { FolderOpenRounded, FolderRounded } from "@material-ui/icons";
+import "./CollectionListItem.scss";
 
-function CollectionListItem({collectionData}) {
-	return (<div>test</div>);
+function CollectionListItem({ collectionData, ...rest}) {
+	const [open, setOpen] = useState();
+
+	const handleClick = () => {
+		setOpen(!open);
+	}
+
+	return (
+		<Box>
+			<ListItem button onClick={handleClick} {...rest}>
+				<ListItemIcon>
+					{open ? <FolderOpenRounded /> : <FolderRounded />}
+				</ListItemIcon>
+				<ListItemText>
+					{collectionData.name}
+				</ListItemText>
+			</ListItem>
+			<Collapse in={open} timeout="auto" className="nested-list" unmountOnExit>
+				<List disablePadding>
+					{collectionData.children.map((value) => {
+						return <CollectionListItem key={value.collectionId} collectionData={value} />
+					})}
+				</List>
+			</Collapse>
+		</Box>
+	);
 }
 
 CollectionListItem.propTypes = {

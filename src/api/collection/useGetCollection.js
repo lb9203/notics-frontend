@@ -1,23 +1,30 @@
-import { gql, useLazyQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
 const COLLECTION_QUERY = gql`
-	query collection($collectionId: String) {
-    	collection(collectionId: $collectionId) {
+	query collection($collectionId: String, $parentCollectionId: String) {
+    	collection(collectionId: $collectionId, parentCollectionId: $parentCollectionId) {
     		collectionId
-    		name
     		parentCollectionId
+    		name
+    		description
+    		children {
+    			collectionId
+    		}
     	}
     }
 `;
 
-function useGetCollection() {
-	const [getCollections, { loading, data, errors }] = useLazyQuery(COLLECTION_QUERY);
+function useGetCollection({ collectionId, parentCollectionId }) {
+	const { loading, data, errors } = useQuery(
+		COLLECTION_QUERY, {
+			variables: {
+				collectionId: collectionId,
+				parentCollectionId: parentCollectionId
+			}
+		}
+	);
 
-	const handleGetCollections = async (collectionId = null) => {
-		const data = getCollections({ variables: { collectionId: collectionId } });
-	}
-
-	return [handleGetCollections, loading, data, errors ];
+	return { loading, data, errors };
 }
 
 export default useGetCollection;

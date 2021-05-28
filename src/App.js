@@ -11,7 +11,7 @@ import useClient from "./api/useClient";
 import { ApolloProvider } from "@apollo/client";
 import NoticsDrawer from "./components/drawer/NoticsDrawer/NoticsDrawer";
 import { useState } from "react";
-import {useAuth} from "./hooks/useAuth";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
 	const [drawerOpen, setDrawerOpen] = useState(false);
@@ -23,8 +23,7 @@ function App() {
 				<div className="main">
 					{sessionToken &&
 					<nav>
-						<NoticsDrawer open={drawerOpen} onOpen={() => setDrawerOpen(true)}
-									  onClose={() => setDrawerOpen(false)}/>
+						<NoticsDrawer open={drawerOpen} onOpen={() => setDrawerOpen(true)} onClose={() => setDrawerOpen(false)}/>
 					</nav>}
 					<div className="content">
 						<Switch>
@@ -38,7 +37,7 @@ function App() {
 								<ActivatePage/>
 							</Route>
 							<PrivateRoute path="/home">
-								<div  className="content">
+								<div className="content">
 									home
 								</div>
 							</PrivateRoute>
