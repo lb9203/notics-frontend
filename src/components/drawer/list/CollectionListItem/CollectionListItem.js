@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { useState } from "react";
-import { FolderOpenRounded, FolderRounded } from "@material-ui/icons";
+import { KeyboardArrowDownRounded, KeyboardArrowRightRounded } from "@material-ui/icons";
 import "./CollectionListItem.scss";
 
 function CollectionListItem({ collectionData, ...rest}) {
@@ -15,7 +15,7 @@ function CollectionListItem({ collectionData, ...rest}) {
 		<Box>
 			<ListItem button onClick={handleClick} {...rest}>
 				<ListItemIcon>
-					{open ? <FolderOpenRounded /> : <FolderRounded />}
+					{open ? <KeyboardArrowDownRounded /> : <KeyboardArrowRightRounded />}
 				</ListItemIcon>
 				<ListItemText>
 					{collectionData.name}
