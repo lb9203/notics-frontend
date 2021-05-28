@@ -1,6 +1,6 @@
 import useDeviceType from "../../../hooks/useDeviceType";
 import ResponsiveDrawer from "../ResponsiveDrawer/ResponsiveDrawer";
-import { Box, CircularProgress, Divider, IconButton, List, ListSubheader } from "@material-ui/core";
+import { Box, Divider, IconButton } from "@material-ui/core";
 import './NoticsDrawer.scss';
 import { HomeRounded, MeetingRoomRounded } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
@@ -8,7 +8,7 @@ import LoadingIconButton from "../../inputs/LoadingIconButton/LoadingIconButton"
 import useLogout from "../../../api/auth/useLogout";
 import useGetCollection from "../../../api/collection/useGetCollection";
 import { cloneDeep } from "@apollo/client/utilities";
-import CollectionListItem from "../list/CollectionListItem/CollectionListItem";
+import CollectionList from "../list/CollectionList";
 
 const listToTree = (roots, collections) => {
 	if (roots.length === 0) {
@@ -53,14 +53,7 @@ function NoticsDrawer({ ...rest }) {
 				<LoadingIconButton isLoading={logoutLoading} onClick={() => handleLogout()} id="logout-button"><MeetingRoomRounded/></LoadingIconButton>
 			</Box>
 			<Divider variant="middle"/>
-			<List subheader={<ListSubheader>Collections</ListSubheader>}>
-				{loading ?
-					<CircularProgress id="drawer-list-progress" color="primary"/> :
-					formatData().map((value => {
-						return <CollectionListItem  key={value.collectionId} collectionData={value} />
-					}))
-				}
-			</List>
+			<CollectionList  collectionData={formatData()}/>
 		</ResponsiveDrawer>
 	);
 }
