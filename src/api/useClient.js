@@ -58,7 +58,13 @@ function useClient() {
 	});
 
 	return new ApolloClient({
-		cache: new InMemoryCache(),
+		cache: new InMemoryCache({
+			typePolicies: {
+				Collection: {
+					keyFields: ["collectionId"]
+				}
+			}
+		}),
 		link: from([
 			authMiddleware,
 			errorLink,

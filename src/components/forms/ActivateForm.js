@@ -2,9 +2,10 @@ import { useState } from "react";
 import useActivate from "../../api/auth/useActivate";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { Box, Divider, Grid, TextField, Typography } from "@material-ui/core";
+import { Box, Divider, Grid, TextField } from "@material-ui/core";
 import LoadingButton from "../inputs/LoadingButton/LoadingButton";
 import { Alert } from "@material-ui/lab";
+import { CheckRounded } from "@material-ui/icons";
 
 function ActivateForm() {
 	const [handleActivate, loading] = useActivate();
@@ -37,7 +38,7 @@ function ActivateForm() {
 
 	return (
 		<Box>
-			<Typography variant="h4" color="textSecondary" align="center">Activate</Typography>
+			<CheckRounded style={{fontSize: 60}} color="primary" />
 			<Divider variant="middle"/>
 			{!!errorMessage && errorAlert}
 			<form autoComplete="off">

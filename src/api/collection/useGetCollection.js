@@ -7,9 +7,6 @@ const COLLECTION_QUERY = gql`
     		parentCollectionId
     		name
     		description
-    		children {
-    			collectionId
-    		}
     	}
     }
 `;

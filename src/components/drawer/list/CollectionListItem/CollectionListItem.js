@@ -1,39 +1,32 @@
 import PropTypes from "prop-types";
-import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { Box, Collapse, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { useState } from "react";
-import { KeyboardArrowDownRounded, KeyboardArrowRightRounded } from "@material-ui/icons";
 import "./CollectionListItem.scss";
+import { KeyboardArrowDownRounded, KeyboardArrowRightRounded } from "@material-ui/icons";
+import CollectionListLevel from "../CollectionListLevel/CollectionListLevel";
 
-function CollectionListItem({ collectionData, ...rest}) {
-	const [open, setOpen] = useState();
-
-	const handleClick = () => {
-		setOpen(!open);
-	}
+function CollectionListItem({ collection }) {
+	const [open, setOpen] = useState(false);
 
 	return (
-		<Box>
-			<ListItem button onClick={handleClick} {...rest}>
+		<Box className="collection-list-item">
+			<ListItem button onClick={() => setOpen(!open)} key={collection.collectionId}>
 				<ListItemIcon>
 					{open ? <KeyboardArrowDownRounded /> : <KeyboardArrowRightRounded />}
 				</ListItemIcon>
 				<ListItemText>
-					{collectionData.name}
+					{collection.name}
 				</ListItemText>
 			</ListItem>
 			<Collapse in={open} timeout="auto" className="nested-list" unmountOnExit>
-				<List disablePadding>
-					{collectionData.children.map((value) => {
-						return <CollectionListItem key={value.collectionId} collectionData={value} />
-					})}
-				</List>
+				<CollectionListLevel collections={collection.children} parentId={collection.collectionId.toString()}/>
 			</Collapse>
 		</Box>
 	);
 }
 
 CollectionListItem.propTypes = {
-	collectionData: PropTypes.object.isRequired
+	collection: PropTypes.object.isRequired
 }
 
 export default CollectionListItem;
