@@ -38,7 +38,6 @@ function App() {
 							</Route>
 							<PrivateRoute path="/home">
 								<div className="content">
-									home
 								</div>
 							</PrivateRoute>
 						</Switch>

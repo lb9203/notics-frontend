@@ -8,7 +8,7 @@ import "./CollectionListLevel.scss";
 
 function CollectionListLevel({collections, parentId, ...rest}) {
 	const [dialogOpen, setDialogOpen] = useState(false);
-	console.log(parentId);
+
 	return (
 		<Box className="collection-list-level">
 			<List {...rest}>
@@ -28,7 +28,7 @@ function CollectionListLevel({collections, parentId, ...rest}) {
 
 CollectionListLevel.propTypes = {
 	collections: propTypes.array.isRequired,
-	parentId: propTypes.string
+	parentId: propTypes.number
 }
 
 export default CollectionListLevel;

@@ -12,7 +12,7 @@ function CreateCollectionForm({ parentId = null, onCancel }) {
 			await handleCreateCollection({
 				name: name,
 				description: description !== '' ? description : null,
-				parentCollectionId: parentId !== null ? parentId.toString() : null
+				parentCollectionId: parentId
 			});
 		} catch (e) {
 			console.log(e);

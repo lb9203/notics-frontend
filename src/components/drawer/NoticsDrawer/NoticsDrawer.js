@@ -6,7 +6,7 @@ import { HomeRounded, MeetingRoomRounded } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import LoadingIconButton from "../../inputs/LoadingIconButton/LoadingIconButton";
 import useLogout from "../../../api/auth/useLogout";
-import CollectionList from "../list/CollectionList/CollectionList";
+import CollectionList from "../collection-list/CollectionList/CollectionList";
 
 function NoticsDrawer({ ...rest }) {
 	const [isMobile, isTablet] = useDeviceType();

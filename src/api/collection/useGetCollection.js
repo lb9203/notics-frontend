@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 
 const COLLECTION_QUERY = gql`
-	query collection($collectionId: String, $parentCollectionId: String) {
+	query collection($collectionId: Int, $parentCollectionId: Int) {
     	collection(collectionId: $collectionId, parentCollectionId: $parentCollectionId) {
     		collectionId
     		parentCollectionId
