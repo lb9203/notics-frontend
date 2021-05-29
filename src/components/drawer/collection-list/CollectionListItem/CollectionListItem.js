@@ -8,11 +8,11 @@ import {
 	ListItemText
 } from "@material-ui/core";
 import { useState } from "react";
-import "./CollectionListItem.scss";
 import { DeleteOutlineRounded, KeyboardArrowDownRounded, KeyboardArrowRightRounded } from "@material-ui/icons";
 import CollectionListLevel from "../CollectionListLevel/CollectionListLevel";
 import LoadingIconButton from "../../../inputs/LoadingIconButton/LoadingIconButton";
 import useDeleteCollection from "../../../../api/collection/useDeleteCollection";
+import "./CollectionListItem.scss";
 
 function CollectionListItem({ collection }) {
 	const [open, setOpen] = useState(false);
@@ -27,12 +27,12 @@ function CollectionListItem({ collection }) {
 	}
 
 	return (
-		<Box className="collection-list-item">
-			<ListItem button onClick={() => setOpen(!open)} key={collection.collectionId}>
+		<Box>
+			<ListItem className="collection-list-item" button onClick={() => setOpen(!open)} key={collection.collectionId}>
 				<ListItemIcon>
 					{open ? <KeyboardArrowDownRounded /> : <KeyboardArrowRightRounded />}
 				</ListItemIcon>
-				<ListItemText>
+				<ListItemText primaryTypographyProps={{noWrap: true}}>
 					{collection.name}
 				</ListItemText>
 				<ListItemSecondaryAction>

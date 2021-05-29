@@ -1,12 +1,13 @@
 .collection-list-item {
-  .MuiListItem-root {
-
-    .MuiListItemIcon-root {
-      color: inherit;
-    }
+  .MuiSvgIcon-root {
+    color: black;
   }
 
   .nested-list {
     margin-left: 15px;
   }
+}
+
+.nested-list {
+  margin-left: 15px;
 }

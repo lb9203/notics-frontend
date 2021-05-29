@@ -1,8 +1,9 @@
-import { ListSubheader } from "@material-ui/core";
+import { Box, ListSubheader } from "@material-ui/core";
 import useGetCollection from "../../../../api/collection/useGetCollection";
 import { useEffect, useState } from "react";
 import { cloneDeep } from "@apollo/client/utilities";
 import CollectionListLevel from "../CollectionListLevel/CollectionListLevel";
+import "./CollectionList.scss"
 
 const listToTree = (parentId, collections) => {
 	const roots = collections.filter((collection) => {
@@ -29,7 +30,9 @@ function CollectionList() {
 	}, [data])
 
 	return (
-		<CollectionListLevel collections={collections} parentId={null} subheader={(<ListSubheader>Collections</ListSubheader>)}/>
+		<Box className="collection-list">
+			<CollectionListLevel collections={collections} parentId={null} subheader={(<ListSubheader>Collections</ListSubheader>)}/>
+		</Box>
 	);
 }
 
