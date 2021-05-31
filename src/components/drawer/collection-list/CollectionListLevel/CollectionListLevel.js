@@ -28,7 +28,7 @@ function CollectionListLevel({collections, parentId, ...rest}) {
 
 CollectionListLevel.propTypes = {
 	collections: propTypes.array.isRequired,
-	parentId: propTypes.number
+	parentId: propTypes.oneOfType([propTypes.number, propTypes.string]),
 }
 
 export default CollectionListLevel;

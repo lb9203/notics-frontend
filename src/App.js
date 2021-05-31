@@ -12,6 +12,7 @@ import { ApolloProvider } from "@apollo/client";
 import NoticsDrawer from "./components/drawer/NoticsDrawer/NoticsDrawer";
 import { useState } from "react";
 import { useAuth } from "./hooks/useAuth";
+import CollectionPage from "./components/pages/CollectionPage";
 
 function App() {
 	const [drawerOpen, setDrawerOpen] = useState(false);
@@ -36,9 +37,11 @@ function App() {
 							<Route exact path="/activate">
 								<ActivatePage/>
 							</Route>
-							<PrivateRoute path="/home">
-								<div className="content">
-								</div>
+							<PrivateRoute exact path="/home">
+								<Redirect to="/collection/46"/>
+							</PrivateRoute>
+							<PrivateRoute path="/collection">
+								<CollectionPage />
 							</PrivateRoute>
 						</Switch>
 					</div>

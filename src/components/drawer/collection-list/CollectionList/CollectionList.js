@@ -18,7 +18,7 @@ const listToTree = (parentId, collections) => {
 }
 
 function CollectionList() {
-	const { loading, data, errors } = useGetCollection({ collectionId: null, parentCollectionId: null });
+	const { loading, data, errors } = useGetCollection({ collectionId: undefined, parentCollectionId: undefined });
 	const [collections, setCollections] = useState([]);
 
 	useEffect(() => {
@@ -31,7 +31,7 @@ function CollectionList() {
 
 	return (
 		<Box className="collection-list">
-			<CollectionListLevel collections={collections} parentId={null} subheader={(<ListSubheader>Collections</ListSubheader>)}/>
+			<CollectionListLevel collections={collections} parentId={undefined} subheader={(<ListSubheader>Collections</ListSubheader>)}/>
 		</Box>
 	);
 }

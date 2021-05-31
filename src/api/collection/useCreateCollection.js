@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client"
 
 const CREATE_COLLECTION_MUTATION = gql`
-	mutation createCollection($name: String!, $parentCollectionId: Int, $description: String) {
+	mutation createCollection($name: String!, $parentCollectionId: ID, $description: String) {
 		createCollection(
 			name: $name
 			parentCollectionId: $parentCollectionId

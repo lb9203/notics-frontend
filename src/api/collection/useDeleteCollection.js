@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client"
 
 const DELETE_COLLECTION_MUTATION = gql`
-	mutation deleteCollection($collectionId: Int!) {
+	mutation deleteCollection($collectionId: ID!) {
 		deleteCollection(collectionId: $collectionId){
 			collectionId
 			parentCollectionId
