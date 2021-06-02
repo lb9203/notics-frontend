@@ -3,7 +3,7 @@ import {
 	Route,
 	Switch,
 } from "react-router-dom";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/routes/PrivateRoute";
 import AuthPage from "./components/pages/AuthPage";
 import ActivatePage from "./components/pages/ActivatePage";
 import './style/style.scss';

@@ -13,15 +13,13 @@ import CollectionListLevel from "../CollectionListLevel/CollectionListLevel";
 import LoadingIconButton from "../../../inputs/LoadingIconButton/LoadingIconButton";
 import useDeleteCollection from "../../../../api/collection/useDeleteCollection";
 import "./CollectionListItem.scss";
-import {useHistory} from "react-router-dom";
 import ConfirmDialog from "../../../dialogs/ConfirmDialog";
+import ConditionalTooltip from "../../../tooltips/ConditionalTooltip";
 
 function CollectionListItem({collection}) {
     const [open, setOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [handleDeleteCollection, deleteLoading] = useDeleteCollection();
-    const [showDelete, setShowDelete] = useState(false);
-    const history = useHistory();
 
     const handleDelete = async () => {
         try {
@@ -33,19 +31,21 @@ function CollectionListItem({collection}) {
 
     return (
         <Box>
-            <ListItem className="collection-list-item" button onClick={() => setOpen(!open)}>
-                <ListItemIcon>
-                    {open ? <KeyboardArrowDownRounded/> : <KeyboardArrowRightRounded/>}
-                </ListItemIcon>
-                <ListItemText primaryTypographyProps={{noWrap: true}}>
-                    {collection.name}
-                </ListItemText>
-                <ListItemSecondaryAction>
-                    <LoadingIconButton isLoading={deleteLoading} onClick={() => setDeleteDialogOpen(true)}>
-                        <DeleteOutlineRounded/>
-                    </LoadingIconButton>
-                </ListItemSecondaryAction>
-            </ListItem>
+            <ConditionalTooltip title={collection.description} placement="right" arrow>
+                <ListItem className="collection-list-item" button onClick={() => setOpen(!open)}>
+                    <ListItemIcon>
+                        {open ? <KeyboardArrowDownRounded/> : <KeyboardArrowRightRounded/>}
+                    </ListItemIcon>
+                    <ListItemText primaryTypographyProps={{noWrap: true}}>
+                        {collection.name}
+                    </ListItemText>
+                    <ListItemSecondaryAction>
+                        <LoadingIconButton isLoading={deleteLoading} onClick={() => setDeleteDialogOpen(true)}>
+                            <DeleteOutlineRounded/>
+                        </LoadingIconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+            </ConditionalTooltip>
             <Collapse in={open} timeout="auto" className="nested-list" unmountOnExit>
                 <CollectionListLevel collections={collection.children} parentId={collection.collectionId}/>
             </Collapse>
