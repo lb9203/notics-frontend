@@ -40,11 +40,10 @@ function CreateCollectionDialog({parentId, open, setOpen}) {
     })
 
     return (
-        <Dialog className="create-collection-dialog" open={open} onClose={() => setOpen(false)}
-                aria-labelledby="create-collection-dialog-title">
+        <Dialog className="create-collection-dialog" open={open} onClose={() => setOpen(false)} aria-labelledby="create-collection-dialog-title">
             <DialogTitle id="create-collection-dialog-title">Create a collection</DialogTitle>
             <form autoComplete="off">
-                <DialogContent dividers>
+                <DialogContent>
                     <TextField
                         name="name"
                         label="Name"
