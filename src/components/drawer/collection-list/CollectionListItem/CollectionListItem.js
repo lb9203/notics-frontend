@@ -33,7 +33,7 @@ function CollectionListItem({collection}) {
 
     return (
         <Box>
-            <ListItem className="collection-list-item" button onClick={() => setOpen(!open)} key={collection.collectionId}>
+            <ListItem className="collection-list-item" button onClick={() => setOpen(!open)}>
                 <ListItemIcon>
                     {open ? <KeyboardArrowDownRounded/> : <KeyboardArrowRightRounded/>}
                 </ListItemIcon>
