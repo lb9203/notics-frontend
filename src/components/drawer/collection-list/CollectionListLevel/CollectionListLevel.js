@@ -7,7 +7,7 @@ import { useState } from "react";
 import "./CollectionListLevel.scss";
 
 function CollectionListLevel({collections, parentId, ...rest}) {
-	const [dialogOpen, setDialogOpen] = useState(false);
+	const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
 	return (
 		<Box className="collection-list-level">
@@ -15,12 +15,12 @@ function CollectionListLevel({collections, parentId, ...rest}) {
 				{collections.map((value) => {
 					return (<CollectionListItem collection={value}/>);
 				})}
-				<ListItem className="new-collection-button" button onClick={() => setDialogOpen(true)} key={"create-with-parent-"+parentId}>
+				<ListItem className="new-collection-button" button onClick={() => setCreateDialogOpen(true)} key={"create-with-parent-"+parentId}>
 					<ListItemIcon><AddRounded /></ListItemIcon>
 					<ListItemText>New</ListItemText>
 				</ListItem>
 			</List>
-			<CreateCollectionDialog parentId={parentId} open={dialogOpen} setOpen={setDialogOpen} />
+			<CreateCollectionDialog parentId={parentId} open={createDialogOpen} setOpen={setCreateDialogOpen} />
 		</Box>
 
 	);

@@ -5,7 +5,7 @@ function CollectionPage() {
 	console.log(match)
 
 	return (
-		<div>123</div>
+		<div>{JSON.stringify(match)}</div>
 	);
 }
 
